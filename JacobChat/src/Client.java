@@ -121,7 +121,7 @@ public class Client {
 	public synchronized void sendMessage(String message) {
 		try {
 			switch (message) {
-			//check if user enters chat commands
+			// check if user enters chat commands
 			case "/laugh":
 				out.println("/laugh");
 				break;
@@ -132,7 +132,11 @@ public class Client {
 				out.println("kirby!");
 				break;
 			default:
-				out.println("(" + name + ")" + ": " + message);
+				try {
+					out.println("(" + name + ")" + ": " + message);
+				} catch (NullPointerException npe) {
+					showMessage("not connected");
+				}
 			}
 
 		} catch (Exception e) {
