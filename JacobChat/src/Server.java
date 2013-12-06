@@ -13,6 +13,7 @@ import java.util.Set;
 public class Server {
 	private Set<Socket> sockets = new HashSet<Socket>();
 	private Set<String> names = new HashSet<String>();
+	private ServerSocket serverSocket;
 	private static int port;
 	private Calendar cal = Calendar.getInstance();
 	private SimpleDateFormat date = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
@@ -39,8 +40,7 @@ public class Server {
 			 * connection in new threads
 			 */
 			System.out.println("waiting for connetion");
-			@SuppressWarnings("resource")
-			ServerSocket serverSocket = new ServerSocket(port);
+			serverSocket = new ServerSocket(port);
 			while (true) {
 				Socket sock = serverSocket.accept();
 				sockets.add(sock);
@@ -51,6 +51,13 @@ public class Server {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			System.out.println("server setup failed");
+		} finally {
+			try {
+				serverSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 
@@ -160,7 +167,7 @@ public class Server {
 	}
 
 	public void remove(Socket soc) {
-		//close and remove sockets
+		// close and remove sockets
 		try {
 			soc.close();
 			sockets.remove(soc);
