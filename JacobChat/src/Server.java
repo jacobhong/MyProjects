@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -28,9 +29,13 @@ public class Server {
 		 */
 		System.out.println("enter a port");
 		Scanner input = new Scanner(System.in);
-		port = input.nextInt();
-		new Server(port).go();
-		input.close();
+		try {
+			port = input.nextInt();
+			new Server(port).go();
+		} catch (InputMismatchException ime) {
+			System.out.println("Restart and enter valid number");
+			input.close();
+		}
 	}
 
 	public void go() {
@@ -109,7 +114,7 @@ public class Server {
 					 * such as /laugh or /roll, otherwise relay the message to
 					 * all clients
 					 */
-					swich(message);
+					chatCommand(message);
 				}
 			} catch (IOException ex) {
 				System.out.println("user disconnected: " + name + " "
@@ -137,7 +142,7 @@ public class Server {
 
 		}
 
-		public void swich(String message) throws IOException {
+		public void chatCommand(String message) throws IOException {
 			// check if user calls a chat command
 			// otherwise shout message to all clients
 			switch (message) {
