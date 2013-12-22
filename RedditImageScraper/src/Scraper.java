@@ -13,12 +13,20 @@ import org.jsoup.select.Elements;
 
 public class Scraper {
 	private String filePath = "c://reddit//";
+	private String url = "http://www.reddit.com/r/pics/";
+	private int count;
+	private String after;
 
 	public static void main(String[] args) {
-		Scraper scraper = new Scraper();
-		scraper.getImgur();
-		scraper.getImgurAddI();
-		scraper.getImgurA();
+		Scraper scraper = new Scraper();	
+		int i = 0;
+		while (i < 10) {
+			i++;
+			scraper.getImgur();
+			scraper.getImgurAddI();
+			scraper.getImgurA();
+			scraper.getNextPage();
+		}
 
 	}
 
@@ -186,7 +194,7 @@ public class Scraper {
 		Document doc;
 		Elements description = null;
 		try {
-			doc = Jsoup.connect("http://www.reddit.com/r/funny.xml").get();
+			doc = Jsoup.connect("http://www.reddit.com/r/pics.xml").get();
 			description = doc.getElementsByTag("description");
 
 		} catch (IOException e) {
@@ -194,5 +202,31 @@ public class Scraper {
 			e.printStackTrace();
 		}
 		return description;
+	}
+
+	public void getNextPage() {
+		System.out.println("Crawling next page..............");
+		Document doc;
+		try {
+			doc = Jsoup.connect(url).get();
+			Elements next = doc.getElementsByTag("span");
+			for (Element n : next) {
+				if (n.className().equals("nextprev")) {
+					Pattern pattern = Pattern.compile("after=\\w+");
+					Matcher matcher = pattern.matcher(n.toString());
+					if (matcher.find()) {
+						count += 25;
+						after = (matcher.group().substring(6));
+						url = String
+								.format("http://www.reddit.com/r/pics/?count=%d&after=%s",
+										count, after);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+		}
+
 	}
 }
