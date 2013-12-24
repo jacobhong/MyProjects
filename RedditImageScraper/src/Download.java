@@ -7,13 +7,12 @@ import java.net.URL;
 
 public class Download implements Runnable {
 	/*
-	 * can remove download method from Scraper class
-	 * to use the Download thread class, it is faster
-	 * but will cause  timeout issues so use
-	 * with caution
+	 * can remove download method from Scraper class and use the Download thread
+	 * class, it is much faster but will cause a lot of timeout issues so use
+	 * with caution, or if you dont care about getting every image
 	 */
 	private String _url, name;
-	private String filePath = "c://reddit//";
+	private static final String filePath = "c://reddit//";
 
 	public Download(String u, String n) {
 		_url = u;
@@ -35,10 +34,10 @@ public class Download implements Runnable {
 				os.write(b);
 			}
 		} catch (MalformedURLException e1) {
-			System.out.println("invalid url");			
+			System.out.println("invalid url");
 		} catch (IOException e) {
 			System.out.println("no stream connection made");
-		}   finally {
+		} finally {
 			if (is != null) {
 				try {
 					is.close();
