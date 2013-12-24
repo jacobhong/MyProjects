@@ -7,15 +7,17 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Scraper {
+	private String filePath = "c://reddit//";
 	private String url;
 	private int count;
-	private String after;// link to next page
+	private String after;
 	private static String sr;// subreddit
 
 	public Scraper(String sr) {
@@ -28,7 +30,7 @@ public class Scraper {
 		Scraper scraper = new Scraper(sr);
 		input.close();
 		int i = 0;
-		while (i < 5) {
+		while (i < 8) {
 			scraper.getImgur();
 			scraper.getImgurA();
 			scraper.getImgurAddI();
@@ -38,23 +40,39 @@ public class Scraper {
 
 	}
 
-	public Elements getSubreddit() {
+	public void download(String _url, String name) {
 		/*
-		 * load website and scrape the description tag and return to caller
+		 * setup streams.. write image as bytes to filePath
 		 */
-		Document doc;
-		Elements description = null;
+		InputStream is = null;
+		OutputStream os = null;
 		try {
-			doc = Jsoup
-					.connect(url)
-					.userAgent(
-							"Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-					.referrer("http://www.google.com").get();
-			description = doc.getElementsByTag("description");
+			URL url = new URL(_url);
+			is = url.openStream();
+			os = new FileOutputStream(filePath + name + ".jpg");
+			for (int b; (b = is.read()) != -1;) {
+				os.write(b);
+			}
+		} catch (MalformedURLException e1) {
+			System.out.println("invalid url");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("no stream made");
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (os != null) {
+				try {
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		return description;
 	}
 
 	public void getImgur() {
@@ -72,15 +90,12 @@ public class Scraper {
 				if (matcher.find()) {
 					System.out.println("downloading image: " + " "
 							+ matcher.group());
-					Thread t = new Thread(new Download(
-							(matcher.group() + ".jpg"), matcher.group()
-									.substring(18)));
-					t.start();
-
+					download((matcher.group() + ".jpg"), matcher.group()
+							.substring(18));
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("getImgur() failed");
 		} finally {
 			System.out.println("grabbed all imgurs");
 		}
@@ -91,7 +106,7 @@ public class Scraper {
 		/*
 		 * grab all imgur's in the context of http://imgur.com/, if it is an
 		 * album then skip otherwise add "i" to beginning of imgur in order to
-		 * get url to image
+		 * get image
 		 */
 		try {
 			System.out.println("finding imgurs without prefix i and adding i");
@@ -104,16 +119,13 @@ public class Scraper {
 						// make imgur reachable
 						String newUrl = matcher.group();
 						newUrl = "http://i." + newUrl.substring(7);
-						Thread t = new Thread(new Download(newUrl + ".jpg",
-								newUrl.substring(18)));
-						t.start();
-
+						download(newUrl + ".jpg", newUrl.substring(18));
 					}
 				}
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("getImgurAddI() failed");
 		} finally {
 			System.out.println("grabbed all imgurs by adding I");
 		}
@@ -137,7 +149,7 @@ public class Scraper {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("getImgurA() failed");
 		} finally {
 			System.out.println("extracted all imgur albums");
 		}
@@ -166,29 +178,41 @@ public class Scraper {
 						} else {
 							System.out.println("extracting jpg1/jpg2..... "
 									+ image.substring(2));
-							Thread t = new Thread(new Download("http://"
-									+ image.substring(2, image.length() - 2),
-									image.substring(14, image.length() - 6)));
+							download(
+									"http://"
+											+ image.substring(2,
+													image.length() - 2),
+									image.substring(14, image.length() - 6));
 						}
 					} else {
 						System.out.println("extracting..... "
 								+ image.substring(2));
-						Thread t = new Thread(new Download("http://"
-								+ image.substring(2), image.substring(14)));
-
+						download("http://" + image.substring(2),
+								image.substring(14));
 					}
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("extract() failed");
+	
 		}
 
 	}
 
+	public Elements getSubreddit() {
+		Document doc;
+		Elements description = null;
+		try {
+			doc = Jsoup
+					.connect(url).get();
+			description = doc.getElementsByTag("description");
+		} catch (IOException e) {
+			System.out.println("getSubreddit() failed");
+		}
+		return description;
+	}
+
 	public void getNextPage() {
-		/*
-		 * load current url, grab the nextpage url, set as new url
-		 */
 		System.out.println("Crawling next page..............");
 		Document doc;
 		try {
@@ -197,21 +221,23 @@ public class Scraper {
 			Elements next = doc.getElementsByTag("span");
 			for (Element n : next) {
 				if (n.className().equals("nextprev")) {
-					Pattern pattern = Pattern.compile("after=\\w+");
+					Pattern pattern = Pattern
+							.compile("after=\\w+");
 					Matcher matcher = pattern.matcher(n.toString());
 					if (matcher.find()) {
 						after = matcher.group().substring(6);
-						count += 100;
+						count+=100;
 						url = String
 								.format("http://www.reddit.com/r/%s.xml?limit=100&count=%d&after=%s",
 										sr, count, after);
 						System.out.println("Crawling page.........: " + url);
-
+						
 					}
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("getNextPage() failed");
+
 		}
 	}
 }

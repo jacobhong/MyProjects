@@ -6,6 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Download implements Runnable {
+	/*
+	 * can remove download method from Scraper class
+	 * to use the Download thread class, it is much faster
+	 * but will cause many timeout issues so use
+	 * with caution
+	 */
 	private String _url, name;
 	private String filePath = "c://reddit//";
 
@@ -29,11 +35,11 @@ public class Download implements Runnable {
 				os.write(b);
 			}
 		} catch (MalformedURLException e1) {
-			System.out.println("invalid url");
-			System.out.println(e1);
+			System.out.println("invalid url");			
 		} catch (IOException e) {
-			System.out.println("no stream");
-		} finally {
+			System.out.println("no stream connection made");
+			System.out.println(e);
+		}   finally {
 			if (is != null) {
 				try {
 					is.close();
