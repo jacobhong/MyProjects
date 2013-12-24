@@ -1,19 +1,14 @@
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Scraper {
-	private String filePath = "c://reddit//";
 	private String url;
 	private int count;
 	private String after;
@@ -24,6 +19,10 @@ public class Scraper {
 	}
 
 	public static void main(String[] args) {
+		prompt();
+	}
+
+	public static void prompt() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("enter subreddit with pics only");
 		subreddit = input.next();
@@ -32,7 +31,7 @@ public class Scraper {
 		Scraper scraper = new Scraper(subreddit);
 		input.close();
 		int i = 0;
-		long startTime = System.nanoTime();
+		long startTime = System.currentTimeMillis();
 		while (i < pages) {
 			scraper.getNextPage();
 			scraper.getImgur();
@@ -40,43 +39,8 @@ public class Scraper {
 			scraper.getImgurAddI();
 			i++;
 		}
-		System.out.println(System.nanoTime()-startTime + " time elapsed");
-
-	}
-
-	public void download(String _url, String name) {
-		/*
-		 * setup streams.. write image as bytes to filePath
-		 */
-		InputStream is = null;
-		OutputStream os = null;
-		try {
-			URL url = new URL(_url);
-			is = url.openStream();
-			os = new FileOutputStream(filePath + name + ".jpg");
-			for (int b; (b = is.read()) != -1;) {
-				os.write(b);
-			}
-		} catch (MalformedURLException mue) {
-			System.out.println("invalid url");
-		} catch (IOException e) {
-			System.out.println("no stream");
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (os != null) {
-				try {
-					os.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		System.out.println(System.currentTimeMillis() - startTime
+				+ " time  in (ms) elapsed");
 	}
 
 	public void getImgur() {
@@ -94,8 +58,10 @@ public class Scraper {
 				if (matcher.find()) {
 					System.out.println("downloading image: " + " "
 							+ matcher.group());
-					download((matcher.group() + ".jpg"), matcher.group()
-							.substring(18));
+					Thread t = new Thread(new Download(
+							(matcher.group() + ".jpg"), matcher.group()
+									.substring(18)));
+					t.start();
 				}
 			}
 		} catch (Exception e) {
@@ -124,7 +90,10 @@ public class Scraper {
 						// make imgur downloadable by adding 'i' before imgur
 						String newUrl = matcher.group();
 						newUrl = "http://i." + newUrl.substring(7);
-						download(newUrl + ".jpg", newUrl.substring(18));
+						Thread t = new Thread(new Download(newUrl + ".jpg",
+								newUrl.substring(18)));
+						t.start();
+
 					}
 				}
 			}
@@ -189,17 +158,19 @@ public class Scraper {
 						} else {
 							System.out.println("extracting jpg1/jpg2..... "
 									+ image.substring(2));
-							download(
-									"http://"
+							Thread t = new Thread(new Download("http://"
 											+ image.substring(2,
 													image.length() - 2),
-									image.substring(14, image.length() - 6));
+									image.substring(14, image.length() - 6)));
+							t.start();
 						}
 					} else {
 						System.out.println("extracting..... "
 								+ image.substring(2));
-						download("http://" + image.substring(2),
-								image.substring(14));
+						Thread t = new Thread(new Download("http://" + image.substring(2),
+								image.substring(14)));
+						t.start();
+						
 					}
 				}
 			}
@@ -212,8 +183,8 @@ public class Scraper {
 
 	public Elements getSubreddit() {
 		/*
-		 * return an Elements with the information to be scraped
-		 *  to caller method, setup user agent
+		 * return an Elements with the information to be scraped to caller
+		 * method, setup user agent
 		 */
 		Document doc;
 		Elements description = null;
