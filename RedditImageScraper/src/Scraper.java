@@ -21,7 +21,7 @@ public class Scraper {
 	private static String sr;// subreddit
 
 	public Scraper(String sr) {
-		url = String.format("http://www.reddit.com/r/%s.xml?limit=25", sr);
+		url = String.format("http://www.reddit.com/r/%s.xml?limit=100", sr);
 	}
 
 	public static void main(String[] args) {
@@ -32,8 +32,8 @@ public class Scraper {
 		int i = 0;
 		while (i < 5) {
 			scraper.getImgur();
-			//scraper.getImgurA();
-			// scraper.getImgurAddI();
+			scraper.getImgurA();
+			scraper.getImgurAddI();
 			scraper.getNextPage();
 			i++;
 		}
@@ -233,7 +233,7 @@ public class Scraper {
 						after = matcher.group().substring(6);
 						count+=100;
 						url = String
-								.format("http://www.reddit.com/r/%s.xml?limit=25&count=%d&after=%s",
+								.format("http://www.reddit.com/r/%s.xml?limit=100&count=%d&after=%s",
 										sr, count, after);
 						System.out.println("Crawling page.........: " + url);
 						
