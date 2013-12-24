@@ -1,14 +1,19 @@
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Scraper {
+	private String filePath = "c://reddit//";
 	private String url;
 	private int count;
 	private String after;
@@ -43,6 +48,41 @@ public class Scraper {
 				+ " time  in (ms) elapsed");
 	}
 
+	public void download(String _url, String name) {
+		/*
+		 * setup streams.. write image as bytes to filePath
+		 */
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			URL url = new URL(_url);
+			is = url.openStream();
+			os = new FileOutputStream(filePath + name + ".jpg");
+			for (int b; (b = is.read()) != -1;) {
+				os.write(b);
+			}
+		} catch (MalformedURLException mue) {
+			System.out.println("invalid url");
+		} catch (IOException e) {
+			System.out.println("no stream");
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (os != null) {
+				try {
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 	public void getImgur() {
 		/*
 		 * grab all imgur's in the context of http://i.imgur.com/. The second
@@ -58,15 +98,12 @@ public class Scraper {
 				if (matcher.find()) {
 					System.out.println("downloading image: " + " "
 							+ matcher.group());
-					Thread t = new Thread(new Download(
-							(matcher.group() + ".jpg"), matcher.group()
-									.substring(18)));
-					t.start();
+					download((matcher.group() + ".jpg"), matcher.group()
+							.substring(18));
 				}
 			}
 		} catch (Exception e) {
 			System.out.println("getImgur() failed");
-			System.out.println(e);
 		} finally {
 			System.out.println("grabbed all imgurs");
 		}
@@ -90,17 +127,13 @@ public class Scraper {
 						// make imgur downloadable by adding 'i' before imgur
 						String newUrl = matcher.group();
 						newUrl = "http://i." + newUrl.substring(7);
-						Thread t = new Thread(new Download(newUrl + ".jpg",
-								newUrl.substring(18)));
-						t.start();
-
+						download(newUrl + ".jpg", newUrl.substring(18));
 					}
 				}
 			}
 
 		} catch (Exception e) {
 			System.out.println("getImgurAddI() failed");
-			System.out.println(e);
 		} finally {
 			System.out.println("grabbed all imgurs by adding I");
 		}
@@ -125,7 +158,6 @@ public class Scraper {
 			}
 		} catch (Exception e) {
 			System.out.println("getImgurA() failed");
-			System.out.println(e);
 		} finally {
 			System.out.println("extracted all imgur albums");
 		}
@@ -158,24 +190,21 @@ public class Scraper {
 						} else {
 							System.out.println("extracting jpg1/jpg2..... "
 									+ image.substring(2));
-							Thread t = new Thread(new Download("http://"
+							download(
+									"http://"
 											+ image.substring(2,
 													image.length() - 2),
-									image.substring(14, image.length() - 6)));
-							t.start();
+									image.substring(14, image.length() - 6));
 						}
 					} else {
 						System.out.println("extracting..... "
 								+ image.substring(2));
-						Thread t = new Thread(new Download("http://" + image.substring(2),
-								image.substring(14)));
-						t.start();
-						
+						download("http://" + image.substring(2),
+								image.substring(14));
 					}
 				}
 			}
 		} catch (IOException e) {
-			System.out.println(e);
 			System.out.println("extract() failed");
 		}
 
@@ -197,8 +226,6 @@ public class Scraper {
 			description = doc.getElementsByTag("description");
 		} catch (IOException e) {
 			System.out.println("getSubreddit() failed");
-			System.out.println(e);
-			System.out.println("getSubreddit() url is .........." + url);
 		}
 		return description;
 	}
@@ -210,7 +237,6 @@ public class Scraper {
 		System.out.println("Crawling next page..............");
 		Document doc;
 		try {
-			System.out.println("getNextPage() url....is...." + url);
 			url = url.replace(".xml", "");
 			doc = Jsoup.connect(url).get();
 			Elements next = doc.getElementsByTag("span");
@@ -231,7 +257,6 @@ public class Scraper {
 			}
 		} catch (IOException e) {
 			System.out.println("getNextPage() failed");
-
 		}
 	}
 }
