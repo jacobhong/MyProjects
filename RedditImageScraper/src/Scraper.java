@@ -26,15 +26,18 @@ public class Scraper {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
+		System.out.println("enter subreddit with pics only");
 		sr = input.next();
+		System.out.println("enter amount of pages to crawl");
+		int pages = input.nextInt();
 		Scraper scraper = new Scraper(sr);
 		input.close();
 		int i = 0;
-		while (i < 8) {
+		while (i < pages) {
+			scraper.getNextPage();
 			scraper.getImgur();
 			scraper.getImgurA();
 			scraper.getImgurAddI();
-			scraper.getNextPage();
 			i++;
 		}
 
@@ -53,10 +56,10 @@ public class Scraper {
 			for (int b; (b = is.read()) != -1;) {
 				os.write(b);
 			}
-		} catch (MalformedURLException e1) {
+		} catch (MalformedURLException mue) {
 			System.out.println("invalid url");
 		} catch (IOException e) {
-			System.out.println("no stream made");
+			System.out.println("no stream");
 		} finally {
 			if (is != null) {
 				try {
@@ -116,7 +119,7 @@ public class Scraper {
 				Matcher matcher = pattern.matcher(imgur.text());
 				if (matcher.find()) {
 					if (!matcher.group().endsWith("a")) {
-						// make imgur reachable
+						// make imgur downloadable
 						String newUrl = matcher.group();
 						newUrl = "http://i." + newUrl.substring(7);
 						download(newUrl + ".jpg", newUrl.substring(18));
@@ -166,6 +169,11 @@ public class Scraper {
 			Elements pics = doc.getElementsByTag("img");
 			String image = null;
 			for (Element pic : pics) {
+				/*
+				 * get all image's inside the data-src attribute,
+				 * make sure url is valid first, than skip if it ends in 's'
+				 * as its most likely a thumbnail duplicate
+				 */
 				image = pic.attr("data-src");
 				if (image != ""
 						&& (!image.substring(0, image.length() - 4).endsWith(
@@ -193,22 +201,26 @@ public class Scraper {
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("extract() failed");
-	
-		}
+			System.out.println("extract() failed");		}
 
 	}
 
 	public Elements getSubreddit() {
+		/*
+		 * return doc page to caller method
+		 * setup user agent
+		 */
 		Document doc;
 		Elements description = null;
 		try {
 			doc = Jsoup
-					.connect(url).get();
+					.connect(url)
+					.userAgent(
+							"Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+					.referrer("http://www.google.com").get();
 			description = doc.getElementsByTag("description");
 		} catch (IOException e) {
-			System.out.println("getSubreddit() failed");
-		}
+			System.out.println("getSubreddit() failed");		}
 		return description;
 	}
 
@@ -221,17 +233,16 @@ public class Scraper {
 			Elements next = doc.getElementsByTag("span");
 			for (Element n : next) {
 				if (n.className().equals("nextprev")) {
-					Pattern pattern = Pattern
-							.compile("after=\\w+");
+					Pattern pattern = Pattern.compile("after=\\w+");
 					Matcher matcher = pattern.matcher(n.toString());
 					if (matcher.find()) {
 						after = matcher.group().substring(6);
-						count+=100;
+						count += 100;
 						url = String
 								.format("http://www.reddit.com/r/%s.xml?limit=100&count=%d&after=%s",
 										sr, count, after);
 						System.out.println("Crawling page.........: " + url);
-						
+
 					}
 				}
 			}
