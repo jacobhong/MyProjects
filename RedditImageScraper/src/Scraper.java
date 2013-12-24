@@ -4,8 +4,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,19 +15,27 @@ import org.jsoup.select.Elements;
 
 public class Scraper {
 	private String filePath = "c://reddit//";
-	private String url = "http://www.reddit.com/r/pics/";
+	private String url;
 	private int count;
 	private String after;
+	private static String sr;// subreddit
+
+	public Scraper(String sr) {
+		url = String.format("http://www.reddit.com/r/%s.xml?limit=25", sr);
+	}
 
 	public static void main(String[] args) {
-		Scraper scraper = new Scraper();	
+		Scanner input = new Scanner(System.in);
+		sr = input.next();
+		Scraper scraper = new Scraper(sr);
+		input.close();
 		int i = 0;
-		while (i < 10) {
-			i++;
+		while (i < 5) {
 			scraper.getImgur();
-			scraper.getImgurAddI();
-			scraper.getImgurA();
+			//scraper.getImgurA();
+			// scraper.getImgurAddI();
 			scraper.getNextPage();
+			i++;
 		}
 
 	}
@@ -194,9 +204,12 @@ public class Scraper {
 		Document doc;
 		Elements description = null;
 		try {
-			doc = Jsoup.connect("http://www.reddit.com/r/pics.xml").get();
+			doc = Jsoup
+					.connect(url)
+					.userAgent(
+							"Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+					.referrer("http://www.google.com").get();
 			description = doc.getElementsByTag("description");
-
 		} catch (IOException e) {
 			System.out.println("get sr fail");
 			e.printStackTrace();
@@ -208,25 +221,29 @@ public class Scraper {
 		System.out.println("Crawling next page..............");
 		Document doc;
 		try {
+			url = url.replace(".xml", "");
 			doc = Jsoup.connect(url).get();
 			Elements next = doc.getElementsByTag("span");
 			for (Element n : next) {
 				if (n.className().equals("nextprev")) {
-					Pattern pattern = Pattern.compile("after=\\w+");
+					Pattern pattern = Pattern
+							.compile("after=\\w+");
 					Matcher matcher = pattern.matcher(n.toString());
 					if (matcher.find()) {
-						count += 25;
-						after = (matcher.group().substring(6));
+						after = matcher.group().substring(6);
+						count+=100;
 						url = String
-								.format("http://www.reddit.com/r/pics/?count=%d&after=%s",
-										count, after);
+								.format("http://www.reddit.com/r/%s.xml?limit=25&count=%d&after=%s",
+										sr, count, after);
+						System.out.println("Crawling page.........: " + url);
+						
 					}
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-		}
+			System.out.println("nextpage fail");
 
+		}
 	}
 }
