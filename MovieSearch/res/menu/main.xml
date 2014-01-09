@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:showAsAction="ifRoom"
+        android:title="About"/>
+    <item
+        android:id="@+id/bookmarks"
+        android:icon="@android:drawable/star_on"
+        android:showAsAction="ifRoom"
+        android:title="Bookmarks"/>
+
+</menu>
