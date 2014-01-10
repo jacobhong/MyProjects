@@ -92,7 +92,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 				new DownloadTask(holder, movie, manage).execute(movie
 						.getPoster());
 			}
-			holder.imdb_url.setText(Html.fromHtml(movie.getImdb_url()));
+			//holder.imdb_url.setText(Html.fromHtml(movie.getImdb_url()));
 		}
 		return view;
 	}

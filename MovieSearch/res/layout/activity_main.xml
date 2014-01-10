@@ -27,15 +27,6 @@
         android:ems="10"
         android:hint="@string/enter_movie" />
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/movie_textview"
-        android:layout_below="@+id/movie_edittext"
-        android:layout_marginTop="60dp"
-        android:text="@string/search_movie" />
-
     <TextView
         android:id="@+id/json_null"
         android:layout_width="wrap_content"
@@ -45,5 +36,13 @@
         android:layout_marginTop="14dp"
         android:textColor="@color/red" >
     </TextView>
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/json_null"
+        android:layout_centerHorizontal="true"
+        android:text="@string/search_movie" />
 
 </RelativeLayout>

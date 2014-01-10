@@ -8,5 +8,7 @@
     <string name="enter_a_movie_to_search">Enter a movie to search</string>
     <string name="enter_movie">enter movie</string>
     <string name="search_returned_no_results_please_try_a_different_movie">Search returned no results please try a different movie</string>
+    <string name="about">About</string>
+    <string name="bookmarks">Bookmarks</string>
 
 </resources>

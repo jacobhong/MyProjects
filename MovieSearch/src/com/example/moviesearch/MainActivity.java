@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 
 		initialize();
 
@@ -55,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.about:
-			about();
+			new Bookmarks().loadBookmark();
 			break;
 		case R.id.bookmarks:
 			bookmarks();
@@ -65,7 +66,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	private void bookmarks() {
-		//load bookmarks from memory
+		Intent bookmarks = new Intent(MainActivity.this, Bookmarks.class);
+		startActivity(bookmarks);
 	}
 
 	private void about() {

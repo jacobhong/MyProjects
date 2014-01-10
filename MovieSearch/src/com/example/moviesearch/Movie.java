@@ -1,9 +1,11 @@
 package com.example.moviesearch;
 
+import java.io.Serializable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Movie implements Parcelable {
+public class Movie implements Parcelable, Serializable {
 	private String genres;
 	private String rated;
 	private String language;
