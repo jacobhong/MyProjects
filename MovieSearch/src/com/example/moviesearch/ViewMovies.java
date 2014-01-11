@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -41,12 +43,28 @@ public class ViewMovies extends ListActivity implements OnItemClickListener {
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about:
+			break;
+		case R.id.bookmarks:
+			bookmarks();
+			break;
+		}
+		return true;
+	}
+
+	private void bookmarks() {
+		Intent bookmarks = new Intent(ViewMovies.this, Bookmarks.class);
+		startActivity(bookmarks);
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		bookmark = new Bookmarks(getFilesDir());
-		bookmark.addBookmark(movies.get(arg2));
-		Toast.makeText(arg0.getContext(), "Added bookmark", 2).show();
+		new Bookmarks().addBookmark(movies.get(arg2), getApplicationContext());
+		Toast.makeText(arg0.getContext(), "Added bookmark", Toast.LENGTH_SHORT)
+				.show();
 
 	}
-	
 
 }
