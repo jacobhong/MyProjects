@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/title"
         android:layout_marginLeft="10dp"
-  
+        android:contentDescription="@string/movie_image"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -21,7 +21,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-       
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -32,7 +31,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/poster"
         android:layout_below="@id/title"
-
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -43,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/release_date"
-
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -54,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/rated"
-  
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -65,7 +61,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/language"
-
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -76,7 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/rating"
-
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -87,7 +81,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/runtime"
-  
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -98,7 +91,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/country"
- 
         android:paddingRight="5dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -108,7 +100,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/genres"
-   
         android:padding="10dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -118,7 +109,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/directors"
-
         android:padding="10dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />
@@ -128,7 +118,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/actors"
-
         android:padding="10dp"
         android:textColor="@android:color/white"
         android:textSize="12sp" />

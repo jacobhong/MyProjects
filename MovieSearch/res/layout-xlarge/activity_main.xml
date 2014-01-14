@@ -9,6 +9,28 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+    <EditText
+        android:id="@+id/movie_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/search_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="69dp"
+        android:ems="10"
+        android:hint="@string/enter_movie"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/movie_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/movie_edittext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:text="@string/enter_a_movie_to_search"
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
+
     <TextView
         android:id="@+id/error"
         android:layout_width="wrap_content"
@@ -17,27 +39,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="41dp"
         android:gravity="center"
-        android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/movie_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/movie_edittext"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:text="@string/enter_a_movie_to_search"
-        android:textColor="@android:color/white" />
-
-    <EditText
-        android:id="@+id/movie_edittext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/search_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp"
-        android:ems="10"
-        android:hint="@string/enter_movie" />
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/search_button"
@@ -45,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="191dp"
+        android:layout_marginTop="448dp"
         android:text="@string/search_movie" />
 
 </RelativeLayout>

@@ -24,8 +24,8 @@ public class HttpService {
 	public String getJSON(String url) {
 		try {
 			DefaultHttpClient client = new DefaultHttpClient();
-			String t = api + URLEncoder.encode(url, "UTF-8");
-			HttpGet getRequest = new HttpGet(t);
+			String encodedURL = api + URLEncoder.encode(url, "UTF-8");
+			HttpGet getRequest = new HttpGet(encodedURL);
 			HttpResponse getResponse = client.execute(getRequest);
 			int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode != HttpStatus.SC_OK) {

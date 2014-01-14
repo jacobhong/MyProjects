@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -24,15 +25,14 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 
-		initialize();
+			initialize();
 
 	}
 
 	private void initialize() {
 		searchTextview = (TextView) findViewById(R.id.movie_edittext);
-		json_null = (TextView) findViewById(R.id.json_null);
+		json_null = (TextView) findViewById(R.id.error);
 		searchButton = (Button) findViewById(R.id.search_button);
 		searchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -52,25 +52,22 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
-		case R.id.about:				
+		case R.id.about:
+			Intent about = new Intent(MainActivity.this, About.class);
+			startActivity(about);
 			break;
 		case R.id.bookmarks:
-			bookmarks();
+			Intent bookmarks = new Intent(MainActivity.this, Bookmarks.class);
+			startActivity(bookmarks);
 			break;
+		
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void bookmarks() {
-		Intent bookmarks = new Intent(MainActivity.this, Bookmarks.class);		
-		startActivity(bookmarks);
-	}
-
-	private void about() {
-		//show dialogue of tips and usage
-	}
-
+	
 	private class SearchTask extends AsyncTask<Void, Void, ArrayList<Movie>> {
 		ProgressDialog dialogue;
 
@@ -102,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
 			super.onPostExecute(result);
 			dialogue.dismiss();
 			if (result.isEmpty()) {
-				json_null.setText("no results found please try another movie");
+				json_null.setText("no results found");
 				searchTextview.setText("");
 			} else {
 				json_null.setText("");

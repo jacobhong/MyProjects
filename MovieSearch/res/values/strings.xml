@@ -4,11 +4,14 @@
     <string name="app_name">MovieSearch</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="search_movie">Search movie</string>
-    <string name="enter_a_movie_to_search">Enter a movie to search</string>
-    <string name="enter_movie">enter movie</string>
+    <string name="search_movie">Search</string>
+    <string name="enter_a_movie_to_search">Welcome to MovieSearch!</string>
+    <string name="enter_movie">search..</string>
     <string name="search_returned_no_results_please_try_a_different_movie">Search returned no results please try a different movie</string>
     <string name="about">About</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="about_button">CLOSE</string>
+    <string name="about_text">This is a simple movie searching app. When viewing a list of movies you may click the row to bring up an options menu. When viewing bookmarks long press an item to remove it. Bookmarks page will be blank if no bookmarks have been added.</string>
+    <string name="movie_image">movie image</string>
 
 </resources>
