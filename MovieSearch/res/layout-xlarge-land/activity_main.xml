@@ -48,6 +48,7 @@
         android:layout_marginTop="238dp"
         android:ems="10"
         android:hint="@string/enter_movie"
+        android:textColorHint="#FFFFFF"
         android:textSize="22sp" >
 
         <requestFocus />

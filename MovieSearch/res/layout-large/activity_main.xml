@@ -18,6 +18,7 @@
         android:layout_marginBottom="69dp"
         android:ems="10"
         android:hint="@string/enter_movie"
+        android:textColorHint="#FFFFFF"
         android:textSize="22sp" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_below="@+id/search_button"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="41dp"
-        android:gravity="center"      
+        android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="22sp" />
 

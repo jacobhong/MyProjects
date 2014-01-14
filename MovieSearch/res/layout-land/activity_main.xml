@@ -35,7 +35,8 @@
         android:layout_alignRight="@+id/movie_textview"
         android:layout_below="@+id/movie_textview"
         android:ems="10"
-        android:hint="@string/enter_movie" />
+        android:hint="@string/enter_movie"
+        android:textColorHint="#FFFFFF" />
 
     <TextView
         android:id="@+id/error"

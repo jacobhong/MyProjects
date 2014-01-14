@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.moviesearch"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="behavior.droid.moviesearch"
+    android:versionCode="2"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat" >
         <activity
-            android:name="com.example.moviesearch.MainActivity"
+            android:name="behavior.droid.moviesearch.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,33 +25,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.moviesearch.ViewMovies"
+            android:name="behavior.droid.moviesearch.ViewMovies"
             android:label="@string/app_name" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.moviesearch.MainActivity" />
+                android:value="behavior.droid.moviesearch.MainActivity" />
 
             <intent-filter>
                 <action android:name="com.example.moviesearch.VIEWMOVIES" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.moviesearch.Bookmarks"
+            android:name="behavior.droid.moviesearch.Bookmarks"
             android:label="@string/app_name" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.moviesearch.MainActivity" />
+                android:value="behavior.droid.moviesearch.MainActivity" />
 
             <intent-filter>
-                <action android:name="com.example.moviesearch.BOOKMARKS" />
+                <action android:name="behavior.droid.moviesearch.BOOKMARKS" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.moviesearch.About"
+            android:name="behavior.droid.moviesearch.About"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="com.example.moviesearch.ABOUT" />
+                <action android:name="behavior.droid.moviesearch.ABOUT" />
             </intent-filter>
         </activity>
     </application>
