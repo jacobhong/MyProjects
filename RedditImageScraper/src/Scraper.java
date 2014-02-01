@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,13 +8,14 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Scraper {
-	private String filePath = "c://reddit//";
+	private String filePath = "c:\\reddit\\";
 	private String url;
 	private int count;
 	private String after;
@@ -23,7 +25,7 @@ public class Scraper {
 		url = String.format("http://www.reddit.com/r/%s.xml?limit=100", sr);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		prompt();
 	}
 
@@ -54,10 +56,13 @@ public class Scraper {
 		 */
 		InputStream is = null;
 		OutputStream os = null;
+		
 		try {
 			URL url = new URL(_url);
-			is = url.openStream();
-			os = new FileOutputStream(filePath + name + ".jpg");
+			is = url.openStream();			
+			File file = new File(filePath);
+			//file.mkdir();
+			os = new FileOutputStream(file + name + ".jpg");				
 			for (int b; (b = is.read()) != -1;) {
 				os.write(b);
 			}
