@@ -31,7 +31,7 @@ public class Scraper {
 
 	public static void prompt() {
 		Scanner input = new Scanner(System.in);
-		System.out.println("enter subreddit with pics only");
+		System.out.println("enter subreddit with pics only ");
 		subreddit = input.next();
 		System.out.println("enter amount of pages to crawl(max is 9)");
 		int pages = input.nextInt();
