@@ -61,7 +61,7 @@ public class Scraper {
 			URL url = new URL(_url);
 			is = url.openStream();			
 			File file = new File(filePath);
-			//file.mkdir();
+			file.mkdir();
 			os = new FileOutputStream(file + name + ".jpg");				
 			for (int b; (b = is.read()) != -1;) {
 				os.write(b);
