@@ -1,6 +1,7 @@
 package behavior.droid.moviesearch;
 
 import java.util.ArrayList;
+
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 	private TextView searchTextview, json_null;
 	private Button searchButton;
+	ProgressDialog dialogue;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +66,15 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (dialogue != null && dialogue.isShowing()) {
+			dialogue.dismiss();
+		}
+	}
+
 	private class SearchTask extends AsyncTask<Void, Void, ArrayList<Movie>> {
-		ProgressDialog dialogue;
 
 		@Override
 		protected void onPreExecute() {
@@ -92,7 +102,15 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		protected void onPostExecute(ArrayList<Movie> result) {
 			super.onPostExecute(result);
-			dialogue.dismiss();
+			try {
+				if (null != dialogue && dialogue.isShowing()) {
+					dialogue.dismiss();
+					dialogue = null;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			if (result.isEmpty()) {
 				json_null.setText("no results found");
 				searchTextview.setText("");

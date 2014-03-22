@@ -31,13 +31,12 @@ public class ViewMovies extends ActionBarActivity implements
 		int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 		Bundle extras = getIntent().getExtras();
 		ArrayList<Movie> movielist = extras.getParcelableArrayList("movielist");
-		movies = movielist;		
+		movies = movielist;
 		MovieAdapter adapter = new MovieAdapter(this, R.layout.viewmovie,
 				movielist, maxMemory);
 		view.setAdapter(adapter);
 		view.setOnItemClickListener(ViewMovies.this);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		
 
 	}
 
@@ -65,7 +64,6 @@ public class ViewMovies extends ActionBarActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	@Override
 	public void onItemClick(final AdapterView<?> arg0, View arg1,
 			final int arg2, long arg3) {
@@ -85,8 +83,7 @@ public class ViewMovies extends ActionBarActivity implements
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Intent imdb = new Intent(Intent.ACTION_VIEW);
-				imdb.setData(Uri.parse(movies.get(arg2).getImdb_url()
-						.toString()));
+				imdb.setData(Uri.parse(movies.get(arg2).getLinks()));
 				startActivity(imdb);
 			}
 		});

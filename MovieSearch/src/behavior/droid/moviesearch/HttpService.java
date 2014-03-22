@@ -3,6 +3,7 @@ package behavior.droid.moviesearch;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -10,12 +11,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class HttpService {
-	private String api = "http://www.mymovieapi.com/?limit=10&q=";
+	private String api = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yg3jsapknjrph8gayk4nrz94&q=";
 	private String json;
 
 	public String getJSON(String url) {
@@ -25,17 +27,14 @@ public class HttpService {
 			HttpGet getRequest = new HttpGet(encodedURL);
 			HttpResponse getResponse = client.execute(getRequest);
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-			if (statusCode != HttpStatus.SC_OK) {
-			
+			if (statusCode != HttpStatus.SC_OK) {		
 				return null;
 			}
 			HttpEntity entity = getResponse.getEntity();
 			json = EntityUtils.toString(entity);
 			return json;
-		} catch (ClientProtocolException e) {
-		
-		} catch (IOException e) {
-			
+		} catch (ClientProtocolException e) {			
+		} catch (IOException e) {		
 
 		}
 		return null;
@@ -48,15 +47,13 @@ public class HttpService {
 		try {
 			HttpResponse getResponse = client.execute(getRequest);
 			int statusCode = getResponse.getStatusLine().getStatusCode();
-			if (statusCode != HttpStatus.SC_OK) {				
+			if (statusCode != HttpStatus.SC_OK) {
 				return null;
 			}
 			is = getResponse.getEntity().getContent();
 			return is;
-		} catch (ClientProtocolException e) {
-		
-		} catch (IOException e) {
-			
+		} catch (ClientProtocolException e) {		
+		} catch (IOException e) {		
 		}
 
 		return null;
@@ -71,16 +68,15 @@ public class HttpService {
 		try {
 			Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
 			return bitmap;
-		} catch (Exception e) {
-			
+		} catch (Exception e) {	
 		} finally {
 			if (is != null) {
 				try {
 					is.close();
-				} catch (IOException e) {
-
+				} catch (IOException e) {				
 				}
 			}
+
 		}
 		return null;
 	}

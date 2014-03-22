@@ -1,176 +1,45 @@
 package behavior.droid.moviesearch;
 
 import java.io.Serializable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable, Serializable {
+
 	private static final long serialVersionUID = 1L;
-	private String genres;
-	private String rated;
-	private String language;
-	private int rating;
-	private String country;
-	private String release_date;
-	private String title;
-	private String directors;
-	private String actors;
-	private String plot_simple;
-	private String poster;
-	private String runtime;
-	private String imdb_url;
 
-	@Override
-	public String toString() {
-		return "Movie [genres=" + genres + ", rated=" + rated + ", language="
-				+ language + ", rating=" + rating + ", country=" + country
-				+ ", release_date=" + release_date + ", title=" + title
-				+ ",  directors=" + directors + ", actors=" + actors
-				+ ", plot_simple=" + plot_simple + ", poster=" + poster
-				+ ",  runtime=" + runtime + ", imdb_url=" + imdb_url + "]";
-	}
+	private String title, rating, critics_consensus, release_date, rated,
+			synopsis, poster, links;
+	private int year, runtime;
 
-	public Movie(String genres, String rated, String language, int rating,
-			String country, String release_date, String title,
-			String directors, String actors, String plot_simple, String poster,
-			String runtime, String imdb_url) {
+	public Movie(String title, String rating, String critics_consensus,
+			String release_date, String rated, String synopsis, String poster,
+			int year, int runtime, String links) {
 		super();
-		this.genres = genres;
-		this.rated = rated;
-		this.language = language;
-		this.rating = rating;
-		this.country = country;
-		this.release_date = release_date;
 		this.title = title;
-
-		this.directors = directors;
-		this.actors = actors;
-		this.plot_simple = plot_simple;
+		this.rating = rating;
+		this.critics_consensus = critics_consensus;
+		this.release_date = release_date;
+		this.rated = rated;
+		this.synopsis = synopsis;
 		this.poster = poster;
+		this.year = year;
 		this.runtime = runtime;
-		this.imdb_url = imdb_url;
+		this.links = links;
 	}
 
 	public Movie(Parcel in) {
-		this.genres = in.readString();
-		this.rated = in.readString();
-		this.language = in.readString();
-		this.rating = in.readInt();
-		this.country = in.readString();
-		this.release_date = in.readString();
 		this.title = in.readString();
-
-		this.directors = in.readString();
-		this.actors = in.readString();
-		this.plot_simple = in.readString();
+		this.rating = in.readString();
+		this.critics_consensus = in.readString();
+		this.release_date = in.readString();
+		this.rated = in.readString();
+		this.synopsis = in.readString();
 		this.poster = in.readString();
-		this.runtime = in.readString();
-		this.imdb_url = in.readString();
-
-	}
-
-	public String getGenres() {
-		return genres;
-	}
-
-	public void setGenres(String genres) {
-		this.genres = genres;
-	}
-
-	public String getRated() {
-		return rated;
-	}
-
-	public void setRated(String rated) {
-		this.rated = rated;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getRelease_date() {
-		return release_date;
-	}
-
-	public void setRelease_date(String release_date) {
-		this.release_date = release_date;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDirectors() {
-		return directors;
-	}
-
-	public void setDirectors(String directors) {
-		this.directors = directors;
-	}
-
-	public String getActors() {
-		return actors;
-	}
-
-	public void setActors(String actors) {
-		this.actors = actors;
-	}
-
-	public String getPlot_simple() {
-		return plot_simple;
-	}
-
-	public void setPlot_simple(String plot_simple) {
-		this.plot_simple = plot_simple;
-	}
-
-	public String getPoster() {
-		return poster;
-	}
-
-	public void setPoster(String poster) {
-		this.poster = poster;
-	}
-
-	public String getRuntime() {
-		return runtime;
-	}
-
-	public void setRuntime(String runtime) {
-		this.runtime = runtime;
-	}
-
-	public String getImdb_url() {
-		return imdb_url;
-	}
-
-	public void setImdb_url(String imdb_url) {
-		this.imdb_url = imdb_url;
+		this.year = in.readInt();
+		this.runtime = in.readInt();
+		this.links = in.readString();
 	}
 
 	@Override
@@ -180,20 +49,16 @@ public class Movie implements Parcelable, Serializable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(genres);
-		dest.writeString(rated);
-		dest.writeString(language);
-		dest.writeInt(rating);
-		dest.writeString(country);
-		dest.writeString(release_date);
 		dest.writeString(title);
-		dest.writeString(directors);
-		dest.writeString(actors);
-		dest.writeString(plot_simple);
+		dest.writeString(rating);
+		dest.writeString(critics_consensus);
+		dest.writeString(release_date);
+		dest.writeString(rated);
+		dest.writeString(synopsis);
 		dest.writeString(poster);
-		dest.writeString(runtime);
-		dest.writeString(imdb_url);
-
+		dest.writeInt(year);
+		dest.writeInt(runtime);
+		dest.writeString(links);
 	}
 
 	public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -205,4 +70,103 @@ public class Movie implements Parcelable, Serializable {
 			return new Movie[size];
 		}
 	};
+
+	public static Parcelable.Creator<Movie> getCreator() {
+		return CREATOR;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	public String getCritics_consensus() {
+		return critics_consensus;
+	}
+
+	public void setCritics_consensus(String critics_consensus) {
+		this.critics_consensus = critics_consensus;
+	}
+
+	public String getRelease_date() {
+		return release_date;
+	}
+
+	public void setRelease_date(String release_date) {
+		this.release_date = release_date;
+	}
+
+	public String getRated() {
+		return rated;
+	}
+
+	public void setRated(String rated) {
+		this.rated = rated;
+	}
+
+	public String getSynopsis() {
+		return synopsis;
+	}
+
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
+
+	public String getPoster() {
+		return poster;
+	}
+
+	public void setPoster(String poster) {
+		this.poster = poster;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getRuntime() {
+		return runtime;
+	}
+
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
+	}
+
+	public String getLinks() {
+		return links;
+	}
+
+	public void setLinks(String link) {
+		this.links = link;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Movie [title=" + title + ", rating=" + rating
+				+ ", critics_consensus=" + critics_consensus
+				+ ", release_date=" + release_date + ", rated=" + rated
+				+ ", synopsis=" + synopsis + ", poster=" + poster + ", year="
+				+ year + ", runtime=" + runtime + "]";
+	}
+
 }

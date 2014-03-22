@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
 
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/title"
-        android:layout_marginLeft="10dp"
-        android:contentDescription="@string/movie_image"
-        android:textColor="@android:color/white" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:paddingTop="15dp" />
 
     <TextView
         android:id="@+id/title"
@@ -20,118 +18,56 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/release_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/poster"
-        android:layout_below="@id/title"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/rated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/release_date"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/language"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/rated"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/language"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_below="@+id/title"
+        android:layout_marginRight="16dp" />
 
     <TextView
-        android:id="@+id/country"
+        android:id="@+id/release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/rating"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_below="@+id/rating" />
 
     <TextView
-        android:id="@+id/genres"
+        android:id="@+id/rated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/runtime"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_below="@+id/release_date" />
+
+    <TextView
+        android:id="@+id/year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rated" />
 
     <TextView
         android:id="@+id/runtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/country"
-        android:paddingRight="5dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_below="@+id/year" />
 
     <TextView
-        android:id="@+id/directors"
+        android:id="@+id/critics_consensus"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/genres"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/runtime" />
 
     <TextView
-        android:id="@+id/actors"
+        android:id="@+id/synopsis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/directors"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/plot_simple"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/actors"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/imdburl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/plot_simple"
-        android:layout_centerHorizontal="true"
-        android:autoLink="web"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/critics_consensus" />
 
 </RelativeLayout>
