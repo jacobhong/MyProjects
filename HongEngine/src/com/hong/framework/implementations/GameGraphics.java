@@ -57,7 +57,9 @@ public class GameGraphics implements Graphics {
 				throw new RuntimeException("couldnt load bitmap from asset");
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException("couldnt load bitmap from asset");
+			
 		} finally {
 			if (in != null) {
 				try {

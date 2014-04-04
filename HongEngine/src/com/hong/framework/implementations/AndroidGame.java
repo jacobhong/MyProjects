@@ -6,6 +6,7 @@ import com.hong.framework.Game;
 import com.hong.framework.Graphics;
 import com.hong.framework.Input;
 import com.hong.framework.Screen;
+import com.hong.game.Assets;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,9 +40,8 @@ public class AndroidGame extends Activity implements Game {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-		int frameBufferWidth = isLandscape ? 1280 : 800;
-		int frameBufferHeight = isLandscape ? 800 : 1280;
+		int frameBufferWidth = 1280;
+		int frameBufferHeight = 800;
 
 		// artificial frameBuffer the size of target resolution
 		// use RGB_565 to save memory
@@ -77,6 +77,8 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.acquire();
 		screen.resume();
 		renderView.resume();
+//		Assets.music.play();
+		
 	}
 
 	@Override
@@ -86,8 +88,11 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.release();
 		renderView.pause();
 		screen.pause();
-		if (isFinishing())
+//		Assets.music.pause();
+		if (isFinishing()) {
 			screen.dispose();
+//			Assets.music.dispose();
+		}
 	}
 
 	@Override
