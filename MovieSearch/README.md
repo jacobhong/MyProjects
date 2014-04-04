@@ -1,5 +1,7 @@
-"To learn about android I built a movie searching app from scratch, everything in here I learned as I went and it was a great experience. \n
-EDIT: looks like www.mymovieapi.com is down so the actual searches won't work, not sure when it will be back if ever. Might update this app later and use a different api when I have more free time" \n
+"To learn about android I built a movie searching app from scratch, everything in here I learned as I went and it was a great experience.
+
+EDIT: looks like www.mymovieapi.com is down so the actual searches won't work, not sure when it will be back if ever. Might update this app later and use a different api when I have more free time" 
+
 EDIT2: changed api to rotten tomatoes
 
 
