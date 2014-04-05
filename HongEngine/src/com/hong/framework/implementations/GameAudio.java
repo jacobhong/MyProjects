@@ -30,6 +30,7 @@ public class GameAudio implements Audio {
 			AssetFileDescriptor descriptor = assetManager.openFd(filename);
 			return new GameMusic(descriptor);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Couldn't looad " + filename);
 		}
 

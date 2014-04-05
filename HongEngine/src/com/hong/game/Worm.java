@@ -33,8 +33,10 @@ public class Worm {
 	}
 
 	public void eat() {
+		Assets.eat.play(1);
 		WormPart end = parts.get(parts.size() - 1);
 		parts.add(new WormPart(end.x, end.y));
+		
 	}
 
 	public void advance() {
@@ -54,14 +56,14 @@ public class Worm {
 			head.y += 1;
 		if (direction == RIGHT)
 			head.x += 1;
-//		if (head.x < 0)
-//			head.x = 9;
-//		if (head.x > 9)
-//			head.x = 0;
-//		if (head.y < 0)
-//			head.y = 12;
-//		if (head.y > 12)
-//			head.y = 0;
+		if (head.x < 0)
+			head.x = 40;
+		if (head.x > 40)
+			head.x = 0;
+		if (head.y < 0)
+			head.y = 25;
+		if (head.y > 25)
+			head.y = 0;
 	}
 
 	public boolean checkBitten() {

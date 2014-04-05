@@ -2,8 +2,6 @@ package com.hong.game;
 
 import java.util.List;
 
-import android.graphics.Color;
-
 import com.hong.framework.Game;
 import com.hong.framework.Graphics;
 import com.hong.framework.Image;
@@ -56,32 +54,57 @@ public class GameScreen extends Screen {
 		for (int i = 0; i < len; i++) {
 			TouchEvent events = touchEvents.get(i);
 			if (events.type == TouchEvent.TOUCH_DOWN) {
-				if (events.x < 64 && events.y > 416) {
+				if (events.x < 55 && events.y < 55) {
+					state = GameState.PAUSED;
+					return;
+				}
+				if (events.x < 350 && events.y > 400) {
 					world.worm.turnLeft();
 				}
-				if (events.x > 256 && events.y > 416) {
+				if (events.x > 750 && events.y > 400) {
 					world.worm.turnRight();
 				}
 			}
 		}
 		world.update(deltaTime);
-	}
-
-	private void updateGameOver(List<TouchEvent> touchEvents) {
-		// TODO Auto-generated method stub
-
+		if (world.gameOver) {
+			state = GameState.GAMEOVER;
+		}
 	}
 
 	private void updatePaused(List<TouchEvent> touchEvents) {
-		// TODO Auto-generated method stub
-
+		int len = touchEvents.size();
+		for (int i = 0; i < len; i++) {
+			TouchEvent event = touchEvents.get(i);
+			if (event.type == TouchEvent.TOUCH_UP) {
+				if (event.x > 0 && event.x <= 55) {
+					if (event.y > 0 && event.y <= 55) {
+						state = GameState.RUNNING;
+						return;
+					}
+					if (event.y > 148 && event.y < 196) {
+						game.setScreen(new MainMenuScreen(game));
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	@Override
 	public void present(float deltaTime) {
 		Graphics g = game.getGraphics();
 		g.drawImage(Assets.background, 0, 0);
+		g.drawImage(Assets.pausebutton, 0, 0);
 		drawWorld(world);
+		if (state == GameState.READY)
+			drawReadyUI();
+		if (state == GameState.RUNNING)
+			drawRunningUI();
+		if (state == GameState.PAUSED)
+			drawPausedUI();
+		if (state == GameState.GAMEOVER)
+			drawGameOverUI();
 
 	}
 
@@ -118,12 +141,6 @@ public class GameScreen extends Screen {
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 
@@ -133,6 +150,40 @@ public class GameScreen extends Screen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 
+	}
+
+	private void updateGameOver(List<TouchEvent> touchEvents) {
+		game.setScreen(new MainMenuScreen(game));
+		return;
+	}
+
+	private void drawReadyUI() {
+		Graphics g = game.getGraphics();
+		g.drawImage(Assets.ready, 200, 300);
+
+	}
+
+	private void drawRunningUI() {
+		Graphics g = game.getGraphics();
+
+	}
+
+	private void drawPausedUI() {
+		Graphics g = game.getGraphics();
+		g.drawImage(Assets.pausebutton, 0, 0);
+
+	}
+
+	private void drawGameOverUI() {
+		Graphics g = game.getGraphics();
+		g.drawImage(Assets.gameOver, 62, 100);
+
+	}
+
+	@Override
+	public void pause() {
+		if (state == GameState.RUNNING)
+			state = GameState.PAUSED;
 	}
 
 }

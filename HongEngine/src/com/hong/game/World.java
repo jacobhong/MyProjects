@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class World {
 
-	static final int WORLD_WIDTH = 10;
-	static final int WORLD_HEIGHT = 13;
-	static final float TICK_INITIAL = 0.4f;
+	static final int WORLD_WIDTH = 40;
+	static final int WORLD_HEIGHT = 25;
+	static final float TICK_INITIAL = 0.3f;
 	static final float TICK_DECREMENT = 0.03f;
 	public Worm worm;
 	public Apple apple;
@@ -14,6 +14,7 @@ public class World {
 	boolean ground[][] = new boolean[WORLD_WIDTH][WORLD_HEIGHT];
 	float tickTime = 0;
 	float tick = TICK_INITIAL;
+	public boolean gameOver = false;
 
 	public World() {
 		worm = new Worm();
@@ -56,10 +57,11 @@ public class World {
 			tickTime -= tick;
 			worm.advance();
 			if (worm.checkBitten()) {
-
+				gameOver=true;
+				Assets.dead.play(1);
 			}
 			WormPart head = worm.parts.get(0);
-			if(head.x == apple.x&&head.y==apple.y){
+			if (head.x == apple.x && head.y == apple.y) {
 				worm.eat();
 				placeApple();
 			}

@@ -3,6 +3,7 @@ package com.hong.framework.implementations;
 import java.io.IOException;
 
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 
@@ -20,13 +21,15 @@ public class GameMusic implements Music, OnCompletionListener {
 
 	public GameMusic(AssetFileDescriptor descriptor) {
 		player = new MediaPlayer();
-		try {
+		try {			
 			player.setDataSource(descriptor.getFileDescriptor(),
 					descriptor.getStartOffset(), descriptor.getLength());
 			player.prepare();
+			player.setVolume(1f, 1f);
 			isPrepared = true;
 			player.setOnCompletionListener(this);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException("GameMusic: Could not load music");
 		}
 	}

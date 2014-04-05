@@ -1,7 +1,5 @@
 package com.hong.game;
 
-import android.util.Log;
-
 import com.hong.framework.Game;
 import com.hong.framework.Graphics;
 import com.hong.framework.Graphics.ImageFormat;
@@ -32,7 +30,12 @@ public class LoadingScreen extends Screen {
 		Assets.pause = game.getAudio().newSound("pause.ogg");
 		Assets.resume = game.getAudio().newSound("resume.ogg");
 		Assets.tail = g.newImage("tail.png", ImageFormat.ARGB4444);
-		game.setScreen(new GameScreen(game));
+		Assets.start = g.newImage("start.png", ImageFormat.ARGB4444);
+		Assets.gameOver = g.newImage("gameover.png", ImageFormat.ARGB4444);
+		Assets.pausebutton = g
+				.newImage("pausebutton.png", ImageFormat.ARGB4444);
+		Assets.ready = g.newImage("ready.png", ImageFormat.ARGB4444);
+		game.setScreen(new MainMenuScreen(game));
 	}
 
 	@Override

@@ -17,4 +17,9 @@ public class Assets {
 	public static Sound pause;
 	public static Sound resume;
 	public static Music music;
+	
+	public static Image start;
+	public static Image gameOver;
+	public static Image pausebutton;
+	public static Image ready;
 }

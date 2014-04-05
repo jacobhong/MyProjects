@@ -77,7 +77,7 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.acquire();
 		screen.resume();
 		renderView.resume();
-//		Assets.music.play();
+		//Assets.music.play();
 		
 	}
 
@@ -88,10 +88,10 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.release();
 		renderView.pause();
 		screen.pause();
-//		Assets.music.pause();
+		//Assets.music.pause();
 		if (isFinishing()) {
 			screen.dispose();
-//			Assets.music.dispose();
+			//Assets.music.dispose();
 		}
 	}
 
