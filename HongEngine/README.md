@@ -1,3 +1,3 @@
-I made some modifications to a game engine provided from the book Beginning Android Games(2nd edition). Took out some features I don't need and removed support for lower apis. After making the snake game given in the book I wanted to change the pictures and sounds, but didn't put much effort into the art, just wanted to see a quick change in the game.
+I made some modifications to a game engine provided from the book Beginning Android Games(2nd edition). Took out some features I don't need and removed support for lower apis. Started remaking the game provided with my own pictures and sounds.
 
-![imgage](http://i5.photobucket.com/albums/y158/pairenoid/gameimage_zps883fad2a.png)
+![imgage](http://i5.photobucket.com/albums/y158/pairenoid/Screenshot_2014-04-04-18-19-16_zpsfd460d07.png)
