@@ -20,12 +20,12 @@ public class Paddle {
 	}
 
 	public void turnLeft() {
-		speed = 1;
+		speed = 500;
 		direction = LEFT;
 	}
 
 	public void turnRight() {
-		speed = 1;
+		speed = 500;
 		direction = RIGHT;
 	}
 
@@ -34,22 +34,14 @@ public class Paddle {
 	}
 
 	public void update(float deltaTime) {
-		if (direction == LEFT) {
-			x -= (speed * deltaTime);
-		} else if (direction == RIGHT) {
-			x += (speed * deltaTime);
-		} else if (direction == NEUTRAL) {
-			stop();
-		}
-	}
 
-	public void advance() {
-		if (direction == LEFT) {
-			x -= 1;
-		} else if (direction == RIGHT) {
-			x += 1;
+		if (direction == LEFT && x > 0) {
+			x -= speed * deltaTime;
+		} else if (direction == RIGHT && x + WIDTH < 800) {
+			x += speed * deltaTime;
 		} else if (direction == NEUTRAL) {
 			stop();
 		}
+
 	}
 }
