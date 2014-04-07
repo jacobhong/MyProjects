@@ -1,13 +1,5 @@
 package com.hong.framework.implementations;
 
-import com.hong.framework.Audio;
-import com.hong.framework.FileIO;
-import com.hong.framework.Game;
-import com.hong.framework.Graphics;
-import com.hong.framework.Input;
-import com.hong.framework.Screen;
-import com.hong.game.Assets;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -18,6 +10,13 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.hong.framework.Audio;
+import com.hong.framework.FileIO;
+import com.hong.framework.Game;
+import com.hong.framework.Graphics;
+import com.hong.framework.Input;
+import com.hong.framework.Screen;
 
 /*
  * implements Game interface, handles the 
@@ -34,14 +33,15 @@ public class AndroidGame extends Activity implements Game {
 	WakeLock wakeLock;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// remove title bar, go full screen
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		int frameBufferWidth = 1280;
-		int frameBufferHeight = 800;
+		boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+		int frameBufferWidth = isLandscape ? 1280 : 800;
+		int frameBufferHeight = isLandscape ? 800 : 1280;
 
 		// artificial frameBuffer the size of target resolution
 		// use RGB_565 to save memory
@@ -77,8 +77,8 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.acquire();
 		screen.resume();
 		renderView.resume();
-		//Assets.music.play();
-		
+		// Assets.music.play();
+
 	}
 
 	@Override
@@ -88,10 +88,10 @@ public class AndroidGame extends Activity implements Game {
 		wakeLock.release();
 		renderView.pause();
 		screen.pause();
-		//Assets.music.pause();
+		// Assets.music.pause();
 		if (isFinishing()) {
 			screen.dispose();
-			//Assets.music.dispose();
+			// Assets.music.dispose();
 		}
 	}
 

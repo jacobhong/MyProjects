@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+/*
+ * main game loop updates and renders game
+ */
 public class GameRenderer extends SurfaceView implements Runnable {
 	AndroidGame game; // need game instance to draw
 	Bitmap framebuffer; // draw images to buffer @ target size and gets resized
@@ -47,15 +49,21 @@ public class GameRenderer extends SurfaceView implements Runnable {
 		long startTime = System.nanoTime();
 		while (running) {
 			if (!holder.getSurface().isValid()) {
-				// restart loop until surface view is valid
+				/*
+				 * The Surface is not immediately created when the SurfaceView
+				 * is instantiated. Instead, it is created asynchronously. The
+				 * surface will be destroyed each time the activity is paused,
+				 * and it will be re-created when the activity is resumed
+				 */
 				continue;
 			}
 			float deltaTime = (System.nanoTime() - startTime) / 1000000000.0f;
 			startTime = System.nanoTime();
 
+			// draw to framebuffer
 			game.getCurrentScreen().update(deltaTime);
 			game.getCurrentScreen().present(deltaTime);
-
+			// draw to screen and scale
 			Canvas canvas = holder.lockCanvas();
 			canvas.getClipBounds(dstRect);
 			canvas.drawBitmap(framebuffer, null, dstRect, null);
