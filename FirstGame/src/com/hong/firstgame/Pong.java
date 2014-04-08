@@ -1,7 +1,5 @@
 package com.hong.firstgame;
 
-import android.util.Log;
-
 public class Pong {
 	public float x, y;
 	public int speedX, speedY;
@@ -16,8 +14,8 @@ public class Pong {
 	public Pong(int x, int y) {
 		this.x = x;
 		this.y = y;
-		speedX = 500;
-		speedY = 500;
+		speedX = 550;
+		speedY = 550;
 		inBounds = true;
 	}
 
@@ -27,18 +25,18 @@ public class Pong {
 	}
 
 	public void update(float deltaTime) {
+		x += speedX * deltaTime;
+		y += speedY * deltaTime;
 		if (inBounds) {
-			x += speedX * deltaTime;
-			y += speedY * deltaTime;
-			if (x + WIDTH > 800) {
+			if (x + WIDTH > 799) {
 				speedX *= -1;
 			}
-			if (x < 0) {
+			if (x < 1) {
 				speedX *= -1;
 			}
-			if (y > 1280) {
-				// inBounds = false;
-				speedY *= -1;
+			if (y > 1250) {
+				inBounds = false;
+
 			}
 			if (y < 0) {
 				speedY *= -1;

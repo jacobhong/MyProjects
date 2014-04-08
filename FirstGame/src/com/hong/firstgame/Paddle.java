@@ -1,15 +1,12 @@
 package com.hong.firstgame;
 
-import android.util.Log;
-
 public class Paddle {
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
 	public static final int NEUTRAL = 2;
 	public static final int WIDTH = 192;
 	public static final int HEIGHT = 32;
-	public float x;
-	public int y;
+	public float x, y;
 	public int speed;
 	public int direction;
 

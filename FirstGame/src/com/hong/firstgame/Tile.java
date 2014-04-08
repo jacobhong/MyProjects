@@ -3,7 +3,7 @@ package com.hong.firstgame;
 public class Tile {
 	public static final int HEIGHT = 32;
 	public static final int WIDTH = 96;
-	public int x, y;
+	public float x, y;
 	public Type type;
 
 	enum Type {
@@ -23,7 +23,7 @@ public class Tile {
 	}
 
 	public void decrementLife() {
-		switch(type.life){
+		switch (type.life) {
 		case 3:
 			type = Type.MEDIUM;
 			break;
@@ -33,12 +33,12 @@ public class Tile {
 		case 1:
 			type = Type.DEAD;
 			break;
-	
+
 		}
 	}
 
 	public boolean dead() {
-		return type.life == 0;
+		return type == Type.DEAD;
 	}
 
 }
