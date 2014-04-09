@@ -25,24 +25,25 @@ public class Pong {
 	}
 
 	public void update(float deltaTime) {
-		x += speedX * deltaTime;
-		y += speedY * deltaTime;
 		if (inBounds) {
-			if (x + WIDTH > 799) {
+			x += speedX * deltaTime;
+			y += speedY * deltaTime;
+			if (x + WIDTH >= 800) {
 				speedX *= -1;
+				x = 800 - WIDTH - 1;
 			}
-			if (x < 1) {
+			if (x <= 0) {
 				speedX *= -1;
+				x = 1;
 			}
-			if (y > 1250) {
+			if (y >= 1280) {
 				inBounds = false;
-
 			}
-			if (y < 0) {
+			if (y <= 0) {
 				speedY *= -1;
+				y = 1;
 			}
 		}
-
 	}
 
 	public void reverse() {

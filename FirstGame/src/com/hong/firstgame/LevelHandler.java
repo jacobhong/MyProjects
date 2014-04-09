@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.hong.framework.Game;
 
+/*
+ * extend to create a new level by
+ * creating an array of tiles 
+ */
 abstract class LevelHandler {
 	protected int count;
 	protected List<Tile> tiles;

@@ -4,7 +4,9 @@ import com.hong.framework.Game;
 import com.hong.framework.Graphics;
 import com.hong.framework.Graphics.ImageFormat;
 import com.hong.framework.Screen;
-
+/*
+ * initialize all assets for game to memory
+ */
 public class LoadingScreen extends Screen {
 
 	public LoadingScreen(Game game) {
@@ -23,14 +25,17 @@ public class LoadingScreen extends Screen {
 		Assets.tile2 = g.newImage("tile2.png", ImageFormat.ARGB4444);
 		Assets.tile3 = g.newImage("tile3.png", ImageFormat.ARGB4444);
 		Assets.tile4 = g.newImage("tile4.png", ImageFormat.ARGB4444);
-		Assets.tile5 = g.newImage("tile5.png", ImageFormat.ARGB4444);
-
+		Assets.tile5 = g.newImage("tile5.png", ImageFormat.ARGB4444);		
 		Assets.gameover = g.newImage("gameover.png", ImageFormat.ARGB4444);
 		Assets.start = g.newImage("start.png", ImageFormat.ARGB4444);
 		Assets.pause = g.newImage("pause.png", ImageFormat.ARGB4444);
 		Assets.pauseMenu = g.newImage("pauseMenu.png", ImageFormat.ARGB4444);
+		
+		Assets.music = game.getAudio().newMusic("music.mp3");
+		Assets.hit = game.getAudio().newSound("hit.ogg");
 		Assets.pauseClick = game.getAudio().newSound("pauseClick.ogg");
 		Assets.play = game.getAudio().newSound("resume.ogg");
+		Assets.completeSound = game.getAudio().newSound("completeSound.ogg");
 		Assets.dead = game.getAudio().newSound("dead.ogg");
 		game.setScreen(new MainMenuScreen(game));
 

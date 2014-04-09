@@ -28,17 +28,19 @@ public class Paddle {
 
 	public void stop() {
 		speed = 0;
+		direction = NEUTRAL;
 	}
 
 	public void update(float deltaTime) {
 
-		if (direction == LEFT && x > 0) {
-			x -= speed * deltaTime;
-		} else if (direction == RIGHT && x + WIDTH < 800) {
-			x += speed * deltaTime;
-		} else if (direction == NEUTRAL) {
+		x += (direction == LEFT ? -1 : +1) * speed * deltaTime;
+
+		if (x < 0) {
+			x = 0;
+			stop();
+		} else if (x+WIDTH > 800) {
+			x = 800-WIDTH;
 			stop();
 		}
-
 	}
 }
